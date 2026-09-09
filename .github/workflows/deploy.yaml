@@ -50,4 +50,4 @@ jobs:
         script: |
           docker stop chouse-pool
           docker rm --force chouse-pool
-          docker run  -d -p 8080:8080 --name chouse-pool rafaelvlf/chouse-pool:${{ github.sha }}
+          docker run  -d -p 8081:8080 --name chouse-pool rafaelvlf/chouse-pool:${{ github.sha }}
