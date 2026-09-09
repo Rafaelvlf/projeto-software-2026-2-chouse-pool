@@ -1,0 +1,1 @@
+# projeto-software-2026-2-chouse-pool
