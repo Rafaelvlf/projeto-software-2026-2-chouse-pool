@@ -64,3 +64,4 @@ jobs:
             -e RABBITMQ_USERNAME=guest \
             -e RABBITMQ_PASSWORD=guest \
             rafaelvlf/chouse-pool:${{ github.sha }}
+          docker image prune -a -f
