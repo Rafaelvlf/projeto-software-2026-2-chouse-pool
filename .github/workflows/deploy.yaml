@@ -48,6 +48,19 @@ jobs:
         key: ${{ secrets.KEY_TEST }}
         port: 22
         script: |
-          docker stop chouse-pool
-          docker rm --force chouse-pool
-          docker run  -d -p 8081:8080 --name chouse-pool rafaelvlf/chouse-pool:${{ github.sha }}
+          docker network create chouse-net 2>/dev/null || true
+          docker stop chouse-pool 2>/dev/null || true
+          docker rm --force chouse-pool 2>/dev/null || true
+          docker run -d \
+            --name chouse-pool \
+            --network chouse-net \
+            --restart unless-stopped \
+            -p 8081:8080 \
+            -e DATABASE_URL=jdbc:postgresql://chouse-poll-db:5432/chouse_polls \
+            -e DATABASE_USERNAME=postgres \
+            -e DATABASE_PASSWORD=postgres \
+            -e RABBITMQ_HOST=chouse-rabbitmq \
+            -e RABBITMQ_PORT=5672 \
+            -e RABBITMQ_USERNAME=guest \
+            -e RABBITMQ_PASSWORD=guest \
+            rafaelvlf/chouse-pool:${{ github.sha }}
